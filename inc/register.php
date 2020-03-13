@@ -3,16 +3,17 @@
 	<?php
 		if (count($_POST) == 4) { // alle Argumente gegeben
 
-			$surname = $_POST['surname'];
+			$salutation = $_POST['salutation'];
 			$name = $_POST['name'];
+			$surname = $_POST['surname'];
 			$username = generate_username($surname, $name);
 			$unhashed_password = $_POST['password'];
 
 			// prepared statement
-			$sql = "INSERT INTO is_users (username, vorname, nachname, password) VALUES ('John', 'Doe')";
+			$stmt = $con->prepare("INSERT INTO is_user (anrede, nachname, vorname, username, passwort) VALUES (?, ?, ?, ?, md5(?))");
+			$stmt->bind_param("sssss", $salutation, $name, $surname, $username, $unhashed_password);
 
-			/*
-			if ($conn->query($sql) === TRUE) {
+			if ($stmt->execute() === TRUE) {
 				echo '
 				<div class="top-space">
 					<h3>Glückwunsch</h3>
@@ -21,9 +22,8 @@
 				</div>
 				';
 			} else {
-				echo "Error: " . $sql . "<br>" . $conn->error;
+				echo "Error: " . $sql . "<br>" . $con->error;
 			}
-			*/
 			
 			echo '</div>';
 

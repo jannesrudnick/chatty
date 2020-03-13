@@ -6,46 +6,55 @@
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 
-            $_SESSION["uid"] = 1;
-            echo '
-            <div class="top-space">
-                <h3>Let\'s go!</h3>
-                <p>Du bist nun angemeldet und kannst Nachrichten verschicken.</p>
-                <a role="button" class="btn btn-light" href="index.php?do=0">Let\'s go</a>
-            </div>
-            ';
+            // get user
+            if ($stmt = $con->prepare("SELECT uid, passwort FROM is_user WHERE username=?")) {
+                $stmt->bind_param("s", $username);
+                $stmt->execute();
+                $stmt->bind_result($uid, $password_db);
+                $stmt->fetch();
+                $stmt->close();
 
-            return;
+                // hash input password
+                if ($stmt = $con->prepare("SELECT md5(?)")) {
+                    $stmt->bind_param("s", $password);
+                    $stmt->execute();
+                    $stmt->bind_result($password_hash);
+                    $stmt->fetch();
+                    $stmt->close();
 
-            /*
+                    // input password != database password
+                    if ($password_hash != $password_db) {
+                        echo '
+                        <div class="top-space">
+                            <h3>Fehler!</h3>
+                            <p>Du hast ungültige Anmeldedaten eingegeben!</p>
+                            <a role="button" class="btn btn-light" href="index.php?do=1">Anmelden</a>
+                        </div>
+                        ';
 
-            // TODO: make prepared?
-            $sql = "SELECT uid, password FROM is_user WHERE username='" . $usrlgn . "'";
-            $result = $con->query($sql);
-            
-	        if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $uid = $row['uid'];
-                    $password_db = $row['password'];
-                }
-                
-                if (password_verify($password, $password_db)) {
+                        return;
+                    }
+
+                    // right password -> start session with uid
                     $_SESSION["uid"] = $uid;
+
                     echo '
-                    <h3>Let\'s go!</h3>
-                    <p>Du bist nun angemeldet und kannst nachrichten verschicken.</p>
-                    <a role="button" class="btn btn-light" href="index.php?do=0">Start</a>
+                    <div class="top-space">
+                        <h3>Let\'s go!</h3>
+                        <p>Du bist nun angemeldet und kannst Nachrichten verschicken.</p>
+                        <a role="button" class="btn btn-light" href="index.php?do=0">Let\'s go</a>
+                    </div>
                     ';
 
+                    
+
                     return;
-                }	
-            } else {
-                // TODO: beautify
-                echo '
-                <h3>Login nicht erfolgreich!</h3>
-                ';
+                }
+
+                return;
             }
-            */	
+
+            return;
 			
 			echo '</div>';
 		} 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 12. Mrz 2020 um 11:54
--- Server-Version: 10.4.11-MariaDB
--- PHP-Version: 7.4.2
+-- Erstellungszeit: 13. Mrz 2020 um 10:53
+-- Server-Version: 10.1.39-MariaDB
+-- PHP-Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `mos`
+-- Datenbank: `rudnickjan`
 --
 
 -- --------------------------------------------------------
@@ -44,7 +44,7 @@ CREATE TABLE `is_message` (
   `mid` int(11) NOT NULL,
   `betreff` varchar(50) NOT NULL,
   `nachricht` text NOT NULL,
-  `datumzeit` datetime NOT NULL DEFAULT current_timestamp(),
+  `datumzeit` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `senderuid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -69,7 +69,8 @@ CREATE TABLE `is_user` (
 
 INSERT INTO `is_user` (`uid`, `anrede`, `nachname`, `vorname`, `username`, `passwort`) VALUES
 (1, 'Frau', 'Hurtig', 'Frieda', 'frihur', 'b325f1e7c436577f07700ffea219ff03'),
-(3, 'Herr', 'Müller', 'Klaus', 'klamue', '098f6bcd4621d373cade4e832627b4f6');
+(3, 'Herr', 'Müller', 'Klaus', 'klamue', '098f6bcd4621d373cade4e832627b4f6'),
+(4, 'Herr', 'Metther', 'Walter', 'walmet', '*308744B73353D002D4DD827CC771C05FC7E0CC86');
 
 --
 -- Indizes der exportierten Tabellen
@@ -107,7 +108,7 @@ ALTER TABLE `is_message`
 -- AUTO_INCREMENT für Tabelle `is_user`
 --
 ALTER TABLE `is_user`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

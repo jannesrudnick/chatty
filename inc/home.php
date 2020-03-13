@@ -42,7 +42,19 @@ if (!isset($_SESSION["uid"])) {
 ?>
 
 <div class="jumbotron text-center">
-    <h1>Guten Tag NAME!</h1>
+    <h1>Guten Tag 
+    <?php 
+        if ($stmt = $con->prepare("SELECT username FROM is_user WHERE uid=?")) {
+            $stmt->bind_param("s", $_SESSION['uid']);
+            $stmt->execute();
+            $stmt->bind_result($username);
+            $stmt->fetch();
+            $stmt->close();
+
+            echo '<code>'.$username.'</code>';
+        }
+    ?>
+    !</h1>
 </div>
 
 <div class="container">

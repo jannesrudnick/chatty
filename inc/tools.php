@@ -12,6 +12,40 @@ function generate_username($surname, $name) {
     return strtolower(substr(special_chars($surname), 0, 3) . substr(special_chars($name), 0, 3));
 }
 
+function print_table($sql) {
+	$result = $GLOBALS['db']->query($sql);
+
+	if ($result->num_rows > 0) {
+		// output data of each row
+		echo '<table>';
+		
+		$fields = $result->fetch_fields();
+		echo '<tr>';
+			for($s=0; $s < $result->field_count;$s++) {
+				$name = $fields[$s]->name;
+				echo '<th><a href="ausgabe.php?order='.$name.'">'.$name.'<a/></th>';
+			}
+		echo'</tr>';
+		
+		
+		while($row = $result->fetch_array()) {
+			echo '<tr>';
+				
+				for($s=0; $s < $result->field_count;$s++) {
+					echo '<td>'.$row[$s].'</td>';
+				}
+				
+			echo'</tr>';
+		}
+		
+		echo '
+		</table>
+		';
+		
+	} else {
+		echo "0 results";
+	}
+}
 
 
 ?>

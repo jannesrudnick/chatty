@@ -11,4 +11,6 @@ $dbname = "rudnickjan";
 if ($con->connect_errno) {
     die("Fehlercode: " . $con->connect_errno);
 }
+
+$GLOBALS['db'] = $con;
 ?>

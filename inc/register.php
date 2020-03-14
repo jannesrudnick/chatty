@@ -13,7 +13,7 @@
 			$stmt = $con->prepare("INSERT INTO is_user (anrede, nachname, vorname, username, passwort) VALUES (?, ?, ?, ?, md5(?))");
 			$stmt->bind_param("sssss", $salutation, $name, $surname, $username, $unhashed_password);
 
-			if ($stmt->execute() === TRUE) {
+			if ($stmt->execute()) {
 				echo '
 				<div class="top-space">
 					<h3>Glückwunsch</h3>

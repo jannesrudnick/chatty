@@ -25,6 +25,9 @@
                         <a class="nav-link" href="index.php?do=12">Profil</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="index.php?do=13">Chat\'s</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php?do=0&a=logout">Abmelden</a>
                     </li>
                     ';

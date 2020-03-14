@@ -1,7 +1,25 @@
 <div class="container">
     <?php
-    if (count($_POST) == 4) { // alle Argumente gegeben
-
+    if (count($_POST) == 2) { // alle Argumente gegeben  UPDATE `is_user` SET `vorname` = 'Waltere' WHERE `is_user`.`uid` = 6;
+        if ($stmt = $con->prepare("UPDATE is_user SET vorname=?, nachname=? WHERE uid=?")) {
+            $stmt->bind_param("sss", $_POST['surname'], $_POST['name'], $_SESSION['uid']);
+            if ($stmt->execute()) {
+                echo '
+                <div class="top-space">
+                    <p>Du hast deine Daten erfolgreich geändert!</p>
+                    <a role="button" class="btn btn-light" href="index.php?do=1">Home</a>
+                </div>
+                ';
+            } else {
+                echo '
+                <div class="top-space">
+                    <h3>Fehler!</h3>
+                    <p>Beim ändern der Daten ist ein Fehler aufgetreten!</p>
+                </div>
+                ';
+            }
+            $stmt->close();
+        }
 
     }    
 

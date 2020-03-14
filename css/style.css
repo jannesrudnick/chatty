@@ -9,3 +9,46 @@
 .notify {
     padding: 32px;
 }
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    max-height: 10%;
+}
+
+.chat-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    padding: 16px;
+    margin: 16px 0;
+    width: 75%;
+    box-shadow: 3px 3px 10px #80808033;
+}
+
+.chat-sender {
+    background-color: #DCF8C6;
+    align-self: flex-end;
+}
+
+.chat-patner {
+    background-color: white;
+    align-self: flex-start;
+}
+
+.chat-header {
+    font-size: 1.2em;
+}
+
+.chat-body {
+
+}
+
+.chat-timestamp {
+    align-items: flex-end;
+}

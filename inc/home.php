@@ -42,27 +42,20 @@ if (!isset($_SESSION["uid"])) {
 ?>
 
 <div class="jumbotron text-center">
-    <h1>Guten Tag 
-    <?php 
-        if ($stmt = $con->prepare("SELECT username FROM is_user WHERE uid=?")) {
-            $stmt->bind_param("s", $_SESSION['uid']);
-            $stmt->execute();
-            $stmt->bind_result($username);
-            $stmt->fetch();
-            $stmt->close();
-
-            echo '<code>'.$username.'</code>';
-        }
-    ?>
-    !</h1>
+    <h1>Guten Tag <?php echo '<code>'.get_username($_SESSION['uid']).'</code>'; ?>!</h1>
 </div>
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-8">
-            <h3>Nachrichten</h3>
+        <div class="col-sm-4">
+            <h3>Protokoll</h3>
             <p>Versende und Empfange Nachrichten.</p>
             <a role="button" class="btn btn-light" href="index.php?do=11">Nachrichten</a>
+        </div>
+        <div class="col-sm-4">
+            <h3>Chat</h3>
+            <p>Führe ein Direkt Chat mit einem anderen User.</p>
+            <a role="button" class="btn btn-light" href="index.php?do=13">Chat's</a>
         </div>
         <div class="col-sm-4">
             <h3>Profil</h3>

@@ -47,5 +47,31 @@ function print_table($sql) {
 	}
 }
 
+function get_uid($username) {
+	if ($stmt = $GLOBALS['db']->prepare("SELECT uid FROM is_user WHERE username=?")) {
+		$stmt->bind_param("s", $username);
+		$stmt->execute();
+		$stmt->bind_result($uid);
+		$stmt->fetch();
+		$stmt->close();
+
+		return $uid;
+	}
+	return;
+}
+
+function get_username($uid) {
+	if ($stmt = $GLOBALS['db']->prepare("SELECT username FROM is_user WHERE uid=?")) {
+		$stmt->bind_param("s", $uid);
+		$stmt->execute();
+		$stmt->bind_result($username);
+		$stmt->fetch();
+		$stmt->close();
+
+		return $username;
+	}
+	return;
+}
+
 
 ?>

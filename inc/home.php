@@ -1,17 +1,17 @@
 <?php
 
-// actions
+// ACTION -> logout  ## log user out
 if (isset($_GET["a"]) && $_GET["a"] == 'logout') {
     session_destroy();
     echo '<script>location.href = "./index.php?do=0&msg=1"</script>';
 }
 
-// messages
-// TODO: switch
+// DISPLAY -> msg
 if (isset($_GET["msg"]) && $_GET["msg"] == '1') {
    echo '<div class="notify">Du hast dich erfolgreich ausgeloggt!</div>';  
 }
 
+// VIEW1 -> einloggen / registrieren
 if (!isset($_SESSION["uid"])) {
     echo '
     <div class="jumbotron text-center">
@@ -37,10 +37,9 @@ if (!isset($_SESSION["uid"])) {
 
     return;
 } 
-
-// TODO: add username welcome message
 ?>
 
+<!-- VIEW2 -->
 <div class="jumbotron text-center">
     <h1>Guten Tag <?php echo '<code>'.get_username($_SESSION['uid']).'</code>'; ?>!</h1>
 </div>

@@ -1,92 +1,36 @@
 <div class="container">
+    <!-- VIEW1  ## show chat with one user -->
     <?php
-
-        // reset patner
+        // ACTION reset patner -> VIEW2
         if (isset($_GET['a']) && $_GET['a'] == 'reset') {
             $_SESSION['patner'] = '';
+        
         } else {
+            // actions button
+            echo '<div class="top-space"><a href="./index.php?do=13">Nachrichten Synchronisieren</a></div><br>';
 
-            echo '<a href="./index.php?do=13">Nachrichten Synchronisieren</a><br>';
-
-            // send message to patner from session
-            if (count($_POST) == 2 && isset($_SESSION['patner']) && strlen($_SESSION['patner']) > 0) {
-
-                $subject = $_POST['subject'];
-                $text = $_POST['text'];
-
-                if ($stmt = $con->prepare("INSERT INTO is_message (betreff, nachricht, senderuid) VALUES (?, ?, ?)")) {
-                    $stmt->bind_param("sss", $subject, $text, $_SESSION['uid']);
-                    $stmt->execute();
-                    $mid = $stmt->insert_id;
-                    $stmt->close();
-
-                    if ($stmt = $con->prepare("INSERT INTO is_empfang (uid, mid) VALUES (?, ?)")) {
-                        $stmt->bind_param("ss", $_SESSION['patner'], $mid);
-                        $stmt->execute();
-                        $stmt->close();
-                    }
-                }
-            
+            // ACTION -> send_message  ## send messages
+            if (
+                count($_POST) == 2 &&
+                isset($_SESSION['patner']) &&
+                strlen($_SESSION['patner']) > 0
+            ) {
+                $partners = array(get_username($_SESSION['patner']));
+                send_message($partners, $_POST['subject'], $_POST['text']);
             } 
-            // show chat with patner
-            if (isset($_POST['patner']) || isset($_SESSION['patner'])) {
-                // reset button
-                echo '<a href="./index.php?do=13&a=reset">Patner Zurücksetzen</a>';
 
-                echo '
-                <div>
-                    <form action="./index.php?do=13" method="post" class="top-space">
-                        <input type="text" class="form-control" placeholder="Betreff eingeben" name="subject" required>
-                        <textarea class="form-control" rows="5" placeholder="Nachricht eingeben" name="text" required></textarea>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-                <div class="chat-box">';
-                
-                if (isset($_SESSION['patner']) && strlen($_SESSION['patner']) > 0) {
-                    $patner = $_SESSION['patner'];
-                } else {
-                    $patner = get_uid($_POST['patner']);
-                    $_SESSION['patner'] = $patner;
-                }
-                
+            // ACTION -> set_read  ## set read state to yes
+            if (
+                count($_GET) == 2 &&
+                isset($_GET['read'])
+            ) { 
+                set_read($_GET['read']);
+            }
 
-                $sql = "SELECT username, datumzeit, betreff, nachricht
-                FROM is_empfang e
-                JOIN is_message m
-                JOIN is_user u
-                ON (e.mid=m.mid) AND (m.senderuid=u.uid)
-                WHERE (m.senderuid=? AND e.uid=?) 
-                OR (m.senderuid=? AND e.uid=?)
-                ORDER BY datumzeit DESC";
-
-                if ($stmt = $con->prepare($sql)) {
-                    $stmt->bind_param("ssss", $patner, $_SESSION['uid'], $_SESSION['uid'], $patner);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    
-                    while ($row = $result->fetch_array()) {
-                        
-                        
-                        $class = ' chat-patner';
-                        if (get_uid($row[0]) == $_SESSION['uid']) {
-                            // align message right
-                            $class = ' chat-sender';
-                        }
-                        echo "
-                        <div class='chat-wrapper'>
-                            <div class='chat $class'>
-                                <div class='chat-header'>$row[2]</div>
-                                <div class='chat-body'>$row[3]</div>
-                                <code class='chat-timestamp'>$row[1]</code>
-                            </div>
-                        </div>";
-
-                    }
-                }
-
-                echo '</div>';
-
+            // VIEW1 -> display_chat  ## display chat & message form
+            if (isset($_POST['patner']) || (isset($_SESSION['patner']) && strlen($_SESSION['patner']) > 0)) {
+                display_chat($_POST['patner']);
+                  
                 return;
             }
 
@@ -96,7 +40,7 @@
 
     ?>
 
-    
+    <!-- VIEW2  ## choose chat patner -->
     <div class="top-space">
         <h3>Chat's</h3>
         <p>Wähle einen User aus, mit welchen du einen Chat beginnen oder fortführen willst.</p>

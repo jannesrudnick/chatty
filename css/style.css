@@ -2,6 +2,11 @@
     margin-top: 32px;
 }
 
+.nav-box {
+    display: flex;
+    background-color: #123;
+}
+
 .form-control {
     margin: 16px 0;
 }

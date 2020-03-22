@@ -35,11 +35,6 @@ if (isset($_GET['do']) && !isset($_SESSION["uid"])) {
     include('inc/home.php');
 }
 
-
 include('inc/footer.php');
 
-// detail view of messages with readed state
-// show unread in message appearence
-// person - direct - chat only view
-// register check if alredy exists
 ?>

@@ -1,20 +1,21 @@
 <div class="container">
     <?php
-    if (count($_POST) == 2) { // alle Argumente gegeben  UPDATE `is_user` SET `vorname` = 'Waltere' WHERE `is_user`.`uid` = 6;
-        if ($stmt = $con->prepare("UPDATE is_user SET vorname=?, nachname=? WHERE uid=?")) {
-            $stmt->bind_param("sss", $_POST['surname'], $_POST['name'], $_SESSION['uid']);
+    if (count($_POST) == 2) {
+        if ($stmt = $con->prepare("UPDATE user SET lastname=?, firstname=? WHERE uid=?")) {
+            $stmt->bind_param("sss", $_POST['lastname'], $_POST['name'], $_SESSION['uid']);
             if ($stmt->execute()) {
                 echo '
                 <div class="top-space">
-                    <p>Du hast deine Daten erfolgreich geändert!</p>
+                    <h3>✅ Congrats</h3>
+                    <p>The data was changed successful!</p>
                     <a role="button" class="btn btn-light" href="index.php?do=1">Home</a>
                 </div>
                 ';
             } else {
                 echo '
                 <div class="top-space">
-                    <h3>Fehler!</h3>
-                    <p>Beim ändern der Daten ist ein Fehler aufgetreten!</p>
+                    <h3>❌ Error</h3>
+                    <p>Unfortunately changing the data caused a error!</p>
                 </div>
                 ';
             }
@@ -23,15 +24,15 @@
 
     }    
 
-    if ($stmt = $con->prepare("SELECT uid, anrede, nachname, vorname, username FROM is_user WHERE uid=?")) {
+    if ($stmt = $con->prepare("SELECT uid, gender, lastname, firstname, username FROM user WHERE uid=?")) {
         $stmt->bind_param("s", $_SESSION['uid']);
         $stmt->execute();
-        $stmt->bind_result($uid, $salutation, $name, $surname, $username);
+        $stmt->bind_result($uid, $gender, $lastname, $name, $username);
         $stmt->fetch();
         $stmt->close();
 
 
-        if ($salutation == 'Herr') {
+        if ($gender == 'male') {
             $male_checked = 'checked';
             $female_checked = '';
         } else {
@@ -42,15 +43,15 @@
         echo '
         <form action="./index.php?do=12" method="post" class="top-space">
             <div class="form-check-inline">
-                <input type="radio" class="form-check-input" name="salutation" value="Herr" '.$male_checked.' disabled>Herr
+                <input type="radio" class="form-check-input" name="gender" value="male" '.$male_checked.' disabled>male
             </div>
             <div class="form-check-inline">
-                <input type="radio" class="form-check-input" name="salutation" value="Frau" '.$female_checked.' disabled>Frau
+                <input type="radio" class="form-check-input" name="gender" value="female" '.$female_checked.' disabled>female
             </div>
-            <input type="text" class="form-control" name="surname" value="'.$surname.'">
+            <input type="text" class="form-control" name="lastname" value="'.$lastname.'">
             <input type="text" class="form-control" name="name" value="'.$name.'">
             <input type="text" class="form-control" value="'.$username.'" disabled>
-            <button type="submit" class="btn btn-primary">Daten ändern</button>
+            <button type="submit" class="btn btn-primary">change data</button>
         </form>
         ';
 

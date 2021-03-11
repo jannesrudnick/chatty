@@ -1,5 +1,4 @@
 <?php
-    // ACTION -> send_message  ## send messages
     if (
         count($_POST) == 3 &&
         isset($_POST['receivers']) &&
@@ -13,14 +12,13 @@
         );
     } 
 
-    // ACTION -> download_message  ## download messages
     if (
         count($_GET) == 4 &&
         isset($_GET['download']) &&
         isset($_GET['from']) &&
         isset($_GET['to'])
     )  {
-        download_message(
+        download_msg(
             $_GET['download'],
             $_GET['from'],
             $_GET['to'],
@@ -31,9 +29,7 @@
 
 
 <div class="container">
-    <!-- VIEW1  ## message detail -->
     <?php
-        // VIEW1 -> display_message_detail  ## display a certain message by id
         if (
             count($_GET) == 4 &&
             isset($_GET['detail']) &&
@@ -50,18 +46,16 @@
         } 
     ?>
     
-    <!-- VIEW2  ## protocol & send form -->
     <div class="row top-space">
         <div class="col-sm-8">
-            <h3>Protokoll</h3>
-            <p>Hier siehst du alle Nachrichten die dir zugeschickt wurden oder du gesendet hast.</p>
+            <h3>🗒 Protocol</h3>
+            <p>Get all messages you send or received.</p>
             <div>
-                <a role="button" class="btn btn-light" href="index.php?do=11&m=all">Alle</a>
-                <a role="button" class="btn btn-light" href="index.php?do=11&m=in">Eingehend</a>
-                <a role="button" class="btn btn-light" href="index.php?do=11&m=out">Ausgehend</a>
+                <a role="button" class="btn btn-light" href="index.php?do=11&m=all">all</a>
+                <a role="button" class="btn btn-light" href="index.php?do=11&m=in">incoming</a>
+                <a role="button" class="btn btn-light" href="index.php?do=11&m=out">outgoing</a>
             </div>
             <?php 
-                // VIEW2 -> display_message_table  ## display protocol
                 if (
                     count($_GET) == 2 &&
                     isset($_GET['m']) &&
@@ -74,13 +68,12 @@
             ?>
         </div>
         <div class="col-sm-4">
-            <h3>Senden</h3>
-            <p>Hier kannst du Nachrichten senden.</p>
+            <h3>🖋 Send</h3>
+            <p>Just send messages.</p>
             <form action="./index.php?do=11" method="post" class="top-space">
                 <select multiple class="form-control" name="receivers[]" required>
                     <?php 
-                        // VIEW2  ## user list to choose receiver/s
-                        $sql = "SELECT username FROM is_user";
+                        $sql = "SELECT username FROM user";
                         $result = $con->query($sql);
                     
                         if ($result->num_rows > 0) {
@@ -91,9 +84,9 @@
                     ?>
                 </select>
                 
-                <input type="text" class="form-control" placeholder="Betreff eingeben" name="subject" required>
-                <textarea class="form-control" rows="5" placeholder="Nachricht eingeben" name="text" required></textarea>
-                <button type="submit" class="btn btn-primary">Absenden</button>
+                <input type="text" class="form-control" placeholder="subject" name="subject" required>
+                <textarea class="form-control" rows="5" placeholder="message" name="text" required></textarea>
+                <button type="submit" class="btn btn-primary">send</button>
             </form>
         </div>
     </div>

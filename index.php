@@ -1,40 +1,36 @@
 <?php
 session_start();
 
-include('inc/tools.php');
-
-// load site
-include('inc/header.php');
+include('src/utils/tools.php');
+include('src/components/header.php');
 
 if (isset($_GET['do']) && !isset($_SESSION["uid"])) {
     switch ($_GET['do']) {
         case 1:
-            include('inc/login.php');
+            include('src/pages/login.php');
             break;
         case 2:
-            include('inc/register.php');
+            include('src/pages/register.php');
             break;
         default:
-            include('inc/home.php');
+            include('src/pages/home.php');
     } 
 } elseif (isset($_GET['do']) && isset($_SESSION["uid"])) {
     switch ($_GET['do']) {
         case 11:
-            include('inc/messages.php');
+            include('src/pages/messages.php');
             break;
         case 12:
-            include('inc/profile.php');
+            include('src/pages/profile.php');
             break;
         case 13:
-            include('inc/chat.php');
+            include('src/pages/chat.php');
             break;
         default:
-            include('inc/home.php');
+            include('src/pages/home.php');
     }
 } else {
-    include('inc/home.php');
+    include('src/pages/home.php');
 }
 
-include('inc/footer.php');
-
-?>
+include('src/components/footer.php');

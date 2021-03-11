@@ -11,10 +11,10 @@
                     echo '
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?do=1">Anmelden</a>
+                            <a class="nav-link" href="index.php?do=1">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?do=2">Registrieren</a>
+                            <a class="nav-link" href="index.php?do=2">Register</a>
                         </li>
                     </ul>
                     ';
@@ -23,7 +23,7 @@
                     echo "
                     <ul class='navbar-nav mr-auto'>
                         <li class='nav-item'>
-                            <a class='nav-link' href='index.php?do=11'>Nachrichten</a>
+                            <a class='nav-link' href='index.php?do=11'>Messages</a>
                         </li>
                         <li class='nav-item'>
                             <a class='nav-link' href='index.php?do=13'>Chat's</a>
@@ -34,7 +34,7 @@
                             <a class='nav-link' href='index.php?do=12'>$username</a>
                         </li>
                         <li class='nav-item'>
-                            <a class='nav-link' href='index.php?do=0&a=logout'>Abmelden</a>
+                            <a class='nav-link' href='index.php?do=0&a=logout'>Logout</a>
                         </li>
                     </ul>
                     ";

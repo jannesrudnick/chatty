@@ -1,5 +1,4 @@
 <div class="container">
-    <!-- VIEW1 -->
 	<?php
         if (
             count($_POST) == 2 &&
@@ -16,10 +15,9 @@
         }
 	?>
 
-    <!-- VIEW2 -->
 	<form action="./index.php?do=1" method="post" class="top-space">
-		<input type="text" class="form-control" placeholder="Benutzername eingeben" name="username" required>
-		<input type="password" class="form-control" placeholder="Passwort eingeben" name="password" required>
-		<button type="submit" class="btn btn-primary">Absenden</button>
+		<input type="text" class="form-control" placeholder="username" name="username" required>
+		<input type="password" class="form-control" placeholder="password" name="password" required>
+		<button type="submit" class="btn btn-primary">Login</button>
 	</form>
 </div>
